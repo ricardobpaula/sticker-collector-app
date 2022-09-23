@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "sticker-collector-app",
+    "slug": "sticker-collector-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
