@@ -1,4 +1,4 @@
-package com.stickercollectorapp;
+package com.ricardobpaula.stickercollectorapp;
 
 import android.os.Build;
 import android.os.Bundle;

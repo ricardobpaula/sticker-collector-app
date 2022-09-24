@@ -1,4 +1,4 @@
-package com.stickercollectorapp.newarchitecture;
+package com.ricardobpaula.stickercollectorapp.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -20,9 +20,9 @@ import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.stickercollectorapp.BuildConfig;
-import com.stickercollectorapp.newarchitecture.components.MainComponentsRegistry;
-import com.stickercollectorapp.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.ricardobpaula.stickercollectorapp.BuildConfig;
+import com.ricardobpaula.stickercollectorapp.newarchitecture.components.MainComponentsRegistry;
+import com.ricardobpaula.stickercollectorapp.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
