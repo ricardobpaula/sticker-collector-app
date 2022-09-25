@@ -15,9 +15,12 @@ import {
     Footer,
     SignInButtonText
 } from './styles'
+import { useNavigation } from "@react-navigation/native"
 
 export const Login:React.FC = () => {
     const [email, setEmail] = useState<string>()
+
+    const navigator = useNavigation()
 
     const handleSubmit = async () => {
         if(!email) {
@@ -33,6 +36,10 @@ export const Login:React.FC = () => {
             Alert.alert(error.response.data.error)
         }
         
+    }
+
+    const handleSignUpButton = () => {
+        navigator.goBack()
     }
 
     return (
@@ -56,8 +63,8 @@ export const Login:React.FC = () => {
                     />
                 </Form>
                 <Footer>
-                    <TouchableOpacity>
-                        <SignInButtonText>Não possuo cadastro</SignInButtonText>
+                    <TouchableOpacity onPress={handleSignUpButton}>
+                        <SignInButtonText>Não possui uma conta?</SignInButtonText>
                     </TouchableOpacity>
                 </Footer>
                     

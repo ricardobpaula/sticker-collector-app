@@ -1,12 +1,14 @@
 import {
-    SafeAreaView,
     View,
-    Text
+    Text,
+    SafeAreaView
 } from 'react-native'
+
 import styled from 'styled-components/native'
+
 import { colors } from '../../styles/theme'
 
-export const Container = styled(View)`
+export const Container = styled(SafeAreaView)`
     flex: 1;
     background-color: ${colors.gray[700]};
 `
@@ -17,7 +19,6 @@ export const Content = styled(View)`
     align-items: center;
     justify-content: space-around;
 `
-
 export const Header = styled(View)`
     align-items: center;
     margin-top: 10px;
@@ -33,7 +34,7 @@ export const Form = styled(View)`
     margin-top: 10px;
     align-items: center;
 `
-export const SignInButtonText = styled(Text)`
+export const LoginButtonText = styled(Text)`
     margin-top: 10px;
     color: ${colors.gray[100]};
     font-size: 14px;

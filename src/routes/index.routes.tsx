@@ -1,8 +1,11 @@
+import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import { Login } from '../screens/login/login'
+import { AuthRoutes } from './auth.routes'
 
 export const Routes:React.FC = () => {
     return (
-        <Login />
+        <NavigationContainer>
+            <AuthRoutes />
+        </NavigationContainer>
     )
 }

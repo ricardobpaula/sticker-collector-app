@@ -4,9 +4,9 @@ import { StatusBar } from 'expo-status-bar'
 
 export const App:React.FC = () => {
   return (
-    <Fragment>
-      <StatusBar style='light' translucent />
-      <Routes />
-    </Fragment>
+      <Fragment>
+        <StatusBar style='light' translucent />
+        <Routes />
+      </Fragment>
   )
 }
