@@ -35,8 +35,8 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({children}) => {
 
     useEffect(() => {
         async function loadStorage() {
-            const { userId } = await getAuthStorage()
-            setUserId(userId && undefined)
+            const response = await getAuthStorage()
+            setUserId(response ? response.userId : undefined)
             setLoading(false)
         }
         loadStorage()

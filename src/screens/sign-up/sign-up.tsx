@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import { Alert, TouchableOpacity } from "react-native"
 import { Button } from "../../components/Button/button"
 import { Input } from "../../components/Input/input"
+import { useAuth } from "../../hooks/useAuth"
 import { AuthStackParamsList } from "../../routes/auth.routes"
 import { api } from "../../services/api"
 import {
@@ -23,6 +24,8 @@ export const SignUp:React.FC = () => {
     const [email, setEmail] = useState<string>()
     const navigator = useNavigation<SignUpScreenProp>()
 
+    const { login } = useAuth()
+
     const handleSubmit = async () => {
         if (!name) {
             return Alert.alert('Nome não preenchido')
@@ -38,7 +41,7 @@ export const SignUp:React.FC = () => {
             })
 
             if (status) {
-                return Alert.alert('Usuário cadasrado com sucesso')
+                await login({email})
             }
 
         } catch (error) {
