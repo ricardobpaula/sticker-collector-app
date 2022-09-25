@@ -16,26 +16,21 @@ import {
     SignInButtonText
 } from './styles'
 import { useNavigation } from "@react-navigation/native"
+import { useAuth } from "../../hooks/useAuth"
 
 export const Login:React.FC = () => {
     const [email, setEmail] = useState<string>()
 
     const navigator = useNavigation()
 
+    const { login } = useAuth()
+
     const handleSubmit = async () => {
         if(!email) {
             return Alert.alert('Preencha o formulario corretamente')
         }
 
-        try {
-            const { data } = await api.post<any>('/users/auth', {
-                email
-            })
-
-        } catch (error) {
-            Alert.alert(error.response.data.error)
-        }
-        
+        await login({email})
     }
 
     const handleSignUpButton = () => {
