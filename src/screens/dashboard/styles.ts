@@ -1,4 +1,4 @@
-import { SafeAreaView, View } from 'react-native'
+import { FlatList, SafeAreaView, View } from 'react-native'
 
 import styled from 'styled-components/native'
 import { colors } from '../../styles/theme'
@@ -12,5 +12,8 @@ export const Content = styled(View)`
     flex: 1;
     padding: 20px 20px;
     align-items: center;
-    /* justify-content: space-around; */
 `
+
+export const ListSection = (styled(FlatList)`
+    width: 100%;
+`as unknown ) as typeof FlatList

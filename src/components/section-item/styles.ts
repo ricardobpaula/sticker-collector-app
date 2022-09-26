@@ -1,0 +1,54 @@
+import {
+    Text,
+    View
+} from 'react-native'
+
+import styled from 'styled-components/native'
+import { colors } from '../../styles/theme'
+
+export const Container = styled(View)`
+    margin-top: 10px;
+    align-items: center;
+    width: 100%;
+`
+
+export const Header = styled(View)`
+    width: 100%;
+    padding: 0 20px;
+    flex-direction: row;
+    justify-content: space-between;
+`
+
+export const Title = styled(Text)`
+    font-size: 16px;
+    font-weight: bold;
+    color: ${colors.secondary[500]};
+`
+export const SubTitle = styled(Text)`
+    font-size: 16px;
+    color: ${colors.gray[700]};
+`
+
+export const Content = styled(View)`
+    width: 100%;
+    background-color: ${colors.gray[500]};
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 4;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 25px;
+`
+
+export const Item = styled(View)`
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    margin: 5px;
+    align-items: center;
+    justify-content: center;
+    background-color: ${colors.green[500]}
+`
+
