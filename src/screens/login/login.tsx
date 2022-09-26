@@ -2,9 +2,11 @@ import React, { useState } from "react"
 
 import { Alert, TouchableOpacity } from 'react-native'
 
-import { api } from '../../services/api'
+import { useNavigation } from "@react-navigation/native"
 
-import { Button } from "../../components/Button/button"
+import { useAuth } from "../../hooks/useAuth"
+
+import { Button } from "../../components/button/button"
 import { Input } from "../../components/Input/input"
 import { 
     Container,
@@ -15,8 +17,6 @@ import {
     Footer,
     SignInButtonText
 } from './styles'
-import { useNavigation } from "@react-navigation/native"
-import { useAuth } from "../../hooks/useAuth"
 
 export const Login:React.FC = () => {
     const [email, setEmail] = useState<string>()

@@ -12,5 +12,5 @@ export const Content = styled(View)`
     flex: 1;
     padding: 20px 20px;
     align-items: center;
-    justify-content: space-around;
+    /* justify-content: space-around; */
 `
