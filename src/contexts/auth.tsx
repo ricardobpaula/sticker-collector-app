@@ -47,6 +47,7 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({children}) => {
             const { data: { userId } } = await api.post<any>('/users/auth', {
                 email
             })
+            api.defaults.headers['user-id'] = userId
             setUserId(userId)
             await setAuthStorage({userId})
         } catch (error) {

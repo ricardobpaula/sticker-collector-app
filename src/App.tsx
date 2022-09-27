@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler'
 import React, { Fragment } from 'react'
 import { Routes } from './routes/index.routes'
 import { StatusBar } from 'expo-status-bar'

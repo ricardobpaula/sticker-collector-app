@@ -1,8 +1,8 @@
 import {
     Text,
-    View
+    View,
+    TouchableOpacity
 } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import styled from 'styled-components/native'
 import { colors } from '../../styles/theme'
@@ -42,9 +42,9 @@ export const Content = styled(View)`
     flex-wrap: wrap;
     flex-grow: 5;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     margin: 10px;
-    padding: 10px;
+    padding: 5px 0px;
     border-radius: 25px;
 `
 
@@ -52,7 +52,7 @@ export const Item = styled(TouchableOpacity)<ItemProps>`
     width: 50px;
     height: 50px;
     border-radius: 30px;
-    margin: 5px;
+    margin: 10px; 
     align-items: center;
     justify-content: center;
     background-color: ${props => props.backgroundColor}

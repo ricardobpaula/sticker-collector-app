@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
+    "build:preview": "eas build --platform android --profile preview",
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
@@ -18,7 +19,7 @@
     "expo": "~46.0.9",
     "expo-splash-screen": "~0.16.2",
     "expo-status-bar": "~1.4.0",
-    "expo-updates": "~0.14.5",
+    "expo-updates": "~0.14.6",
     "lottie-react-native": "5.1.3",
     "react": "18.0.0",
     "react-dom": "18.0.0",
