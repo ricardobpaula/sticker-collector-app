@@ -21,7 +21,8 @@ export const InputText = styled(TextInput)`
     margin-bottom: 10px;
     background-color: ${colors.gray[100]};
     color: ${colors.gray[700]};
-    padding: 0 24px;
-    height: 40px;
+    padding: 10px 24px;
+    min-height: 20px;
+    max-height: 200px;
     border-radius: 10px;
 `

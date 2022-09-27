@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ProgressBar } from '../../components/progress-bar/progress-bar'
 import { colors } from '../../styles/theme'
 
@@ -13,28 +13,43 @@ import { Alert, FlatList, Text } from 'react-native'
 import { api } from '../../services/api'
 import { useAuth } from '../../hooks/useAuth'
 import { SectionItem } from '../../components/section-item/section-item'
+import StickerForm, { StickerFormHandles } from '../../components/sticker-form/sticker-form'
 
 export const Dashboard:React.FC = () => {
     const [sections, setSections] = useState<Section[]>([])
-    const [loaging, setLoading] = useState<boolean>(false)
+    const [loaging, setLoading] = useState<boolean>(true)
+    const [sticker, setSticker] = useState<Sticker>()
     const { userId } = useAuth()
-    
+
+    const modalRef = useRef<StickerFormHandles>(null)
+
+    const handleOpenSticker = (sticker: Sticker) => {
+        setSticker(sticker)
+        modalRef.current?.openModal()
+    }
+
+    const handleUpdateSticker = () => {
+        setLoading(true)
+        loadStickers()
+    }
+
+    const loadStickers = async () => {
+        try {
+            const { data: { sections } } = await api.get('/stickers', {
+                headers: {
+                    userId
+                }
+            })
+            setSections(sections)
+            setLoading(false)
+        } catch (error) {
+            console.error(error.message)
+            Alert.alert('Error loading stickers')
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
-        async function loadStickers() {
-            try {
-                const { data: { sections } } = await api.get('/stickers', {
-                    headers: {
-                        userId
-                    }
-                })
-                setSections(sections)
-            } catch (error) {
-                console.error(error.message)
-                Alert.alert('Error loading stickers')
-            }
-        }
-
         loadStickers()
     }, [])
 
@@ -56,16 +71,25 @@ export const Dashboard:React.FC = () => {
                     size={678}
                     progressColor={colors.secondary[500]}
                 />
-
                 <ListSection
                     data={sections}
                     renderItem={({item}) => {
                         return (
-                            <SectionItem section={item}/>
+                            <SectionItem 
+                                section={item}
+                                handleOpenSticker={(item) => handleOpenSticker(item)}
+                            />
                             )
                     }}
                 />
             </Content>
+            <StickerForm
+                ownerId={userId}
+                sticker={sticker}
+                ref={modalRef}
+                onHandleSubmit={handleUpdateSticker}
+            />
+            
         </Container>
     )
 }

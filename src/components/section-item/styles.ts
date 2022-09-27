@@ -2,9 +2,14 @@ import {
     Text,
     View
 } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import styled from 'styled-components/native'
 import { colors } from '../../styles/theme'
+
+interface ItemProps {
+    backgroundColor: string
+}
 
 export const Container = styled(View)`
     margin-top: 10px;
@@ -25,8 +30,9 @@ export const Title = styled(Text)`
     color: ${colors.secondary[500]};
 `
 export const SubTitle = styled(Text)`
-    font-size: 16px;
+    font-size: 15px;
     color: ${colors.gray[700]};
+    text-align: center;
 `
 
 export const Content = styled(View)`
@@ -34,7 +40,7 @@ export const Content = styled(View)`
     background-color: ${colors.gray[500]};
     flex-direction: row;
     flex-wrap: wrap;
-    flex-grow: 4;
+    flex-grow: 5;
     align-items: center;
     justify-content: center;
     margin: 10px;
@@ -42,13 +48,13 @@ export const Content = styled(View)`
     border-radius: 25px;
 `
 
-export const Item = styled(View)`
+export const Item = styled(TouchableOpacity)<ItemProps>`
     width: 50px;
     height: 50px;
-    border-radius: 25px;
+    border-radius: 30px;
     margin: 5px;
     align-items: center;
     justify-content: center;
-    background-color: ${colors.green[500]}
+    background-color: ${props => props.backgroundColor}
 `
 

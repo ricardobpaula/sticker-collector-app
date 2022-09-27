@@ -6,14 +6,13 @@ import { AuthProvider } from './contexts/auth'
 
 export const App:React.FC = () => {
   return (
-      <Fragment>
-        <NavigationContainer>
-          <AuthProvider>
-            <StatusBar style='light' translucent />
-            <Routes />
+    <Fragment>
+      <NavigationContainer>
+        <AuthProvider>
+          <StatusBar style='light' translucent />
+          <Routes />
         </AuthProvider>
       </NavigationContainer>
-        
-      </Fragment>
+    </Fragment>
   )
 }

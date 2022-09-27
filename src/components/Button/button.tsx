@@ -12,7 +12,10 @@ type ButtonProps = TouchableOpacityProps & {
 }
 export const Button:React.FC<ButtonProps> = ({title,...rest}) => {
     return (
-        <Container{...rest}>
+        <Container
+            activeOpacity={0.7}
+            {...rest}
+        >
             <Title>{title}</Title>
         </Container>
     )

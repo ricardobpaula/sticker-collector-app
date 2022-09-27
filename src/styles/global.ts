@@ -1,10 +1,14 @@
 import {
-    SafeAreaView
+    Platform,
+    StatusBar
 } from 'react-native'
 
 import { createGlobalStyle } from 'styled-components'
-import { colors } from './theme'
+
+const paddingTop = StatusBar.currentHeight ? StatusBar.currentHeight : 20
 
 export const GlobalStyle = createGlobalStyle`
-    padding: 20px 20px;
+    * {
+        padding-top: ${Platform.OS === 'android' ? paddingTop : 0}
+    }
 `
