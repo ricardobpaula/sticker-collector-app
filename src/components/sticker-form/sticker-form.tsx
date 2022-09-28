@@ -1,9 +1,10 @@
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import { Alert, Dimensions } from 'react-native'
+import { Alert, Dimensions, Platform } from 'react-native'
 import { Modalize } from 'react-native-modalize'
 import { api } from '../../services/api'
+import { colors } from '../../styles/theme'
 import { Button } from '../button/button'
-import CustomModal from '../custom-modal/custom-modal'
+import CustomModal, { CustomModalHandles } from '../custom-modal/custom-modal'
 import { Input } from '../Input/input'
 import { 
     Container, 
@@ -15,21 +16,23 @@ import {
 } from './styles'
 
 export interface StickerFormHandles {
-    openModal: () => void
+    openModal: (sticker: Sticker, sectionCode: string) => void
 }
 
 interface StickerFormProps {
-    sticker: Sticker
     ownerId: string
     onHandleSubmit: () => void
 }
 
 const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerFormProps> = 
-    ({ sticker, ownerId, onHandleSubmit }, ref) => {
-    const modalizeRef = useRef<Modalize>(null)
-    const [have, setHave] = useState<boolean>(sticker?.have ?? false)
-    const [pasted, setPasted] = useState<boolean>(sticker?.pasted ?? false)
-    const [obs, setObs] = useState<string>(sticker?.obs)
+    ({  ownerId, onHandleSubmit }, ref) => {
+    const modalRef = useRef<Modalize>(null)
+
+    const [sticker, setSticker] = useState<Sticker>()
+    const [sectionCode, setSectionCode] = useState<string>()
+    const [have, setHave] = useState<boolean>(false)
+    const [pasted, setPasted] = useState<boolean>(false)
+    const [obs, setObs] = useState<string>('')
 
     const handleSubmit = async () => {
         try {
@@ -44,15 +47,20 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
             }
             )
             onHandleSubmit()
-            modalizeRef.current?.close()
+            modalRef.current?.close()
         } catch (error) {
             console.error(error)
             Alert.alert('Error loading stickers')
         }
     }
 
-    const openModal = () => {
-        modalizeRef.current?.open()
+    const openModal = (sticker: Sticker, sectionCode: string) => {
+        setSticker(sticker)
+        setSectionCode(sectionCode)
+        setHave(sticker.have)
+        setPasted(sticker.pasted)
+        setObs(sticker.obs)
+        modalRef.current?.open()
     }
     useImperativeHandle(ref, () => {
         return {
@@ -61,18 +69,22 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
       })
 
     return (
-            <CustomModal
-                ref={modalizeRef}
-                height={Dimensions.get('window').height * 0.6}
+            <Modalize
+                ref={modalRef}
+                modalHeight={Dimensions.get('window').height * 0.4}
+                modalStyle={{flex: 1, backgroundColor: colors.gray[700]}}
+                scrollViewProps={{ showsVerticalScrollIndicator: false }}
+                keyboardAvoidingBehavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardAvoidingOffset={Platform.OS === 'ios' ? 64 : 0}
             >
             <Container>
-                <Title>Figurinha {sticker?.number}</Title>
+                <Title>Figurinha {sectionCode}{sticker?.number}</Title>
                 <Form>
                     <Row>
                         <Label>Possui?</Label>
                         <CustomCheckbox 
                             value={have}
-                            onChange={()=>setHave(item => !item)}
+                            onValueChange={(newValue)=>setHave(newValue)}
                         />
                     </Row>
 
@@ -80,7 +92,7 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
                         <Label>Colada?</Label>
                         <CustomCheckbox 
                             value={pasted}
-                            onChange={()=>setPasted(item => !item)} 
+                            onValueChange={(newValue)=>setPasted(newValue)}
                         />
                     </Row>
         
@@ -94,7 +106,7 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
                 </Form>
                 <Button title='Salvar' onPress={handleSubmit} />
             </Container>
-        </CustomModal>
+        </Modalize>
     )
 }
 

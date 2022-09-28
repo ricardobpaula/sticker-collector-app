@@ -9,7 +9,7 @@ import {
     Content,
     ListSection
 } from './styles'
-import { Alert, FlatList, Text } from 'react-native'
+import { Alert } from 'react-native'
 import { api } from '../../services/api'
 import { useAuth } from '../../hooks/useAuth'
 import { SectionItem } from '../../components/section-item/section-item'
@@ -18,14 +18,12 @@ import StickerForm, { StickerFormHandles } from '../../components/sticker-form/s
 export const Dashboard:React.FC = () => {
     const [sections, setSections] = useState<Section[]>([])
     const [loaging, setLoading] = useState<boolean>(true)
-    const [sticker, setSticker] = useState<Sticker>()
     const { userId } = useAuth()
 
     const modalRef = useRef<StickerFormHandles>(null)
 
-    const handleOpenSticker = (sticker: Sticker) => {
-        setSticker(sticker)
-        modalRef.current?.openModal()
+    const handleOpenSticker = (sticker: Sticker, sectionCode: string) => {
+        modalRef.current?.openModal(sticker, sectionCode)
     }
 
     const handleUpdateSticker = () => {
@@ -77,7 +75,8 @@ export const Dashboard:React.FC = () => {
                         return (
                             <SectionItem 
                                 section={item}
-                                handleOpenSticker={(item) => handleOpenSticker(item)}
+                                key={item.id}
+                                handleOpenSticker={(sticker, sectionCode) => handleOpenSticker(sticker, sectionCode)}
                             />
                             )
                     }}
@@ -85,7 +84,6 @@ export const Dashboard:React.FC = () => {
             </Content>
             <StickerForm
                 ownerId={userId}
-                sticker={sticker}
                 ref={modalRef}
                 onHandleSubmit={handleUpdateSticker}
             />

@@ -14,7 +14,7 @@ import {
 
  interface SectionItem {
     section: Section
-    handleOpenSticker: (sticker: Sticker) => void
+    handleOpenSticker: (sticker: Sticker, sectionCode: string) => void
  }
 
 export const SectionItem:React.FC<SectionItem> = ({
@@ -39,7 +39,7 @@ export const SectionItem:React.FC<SectionItem> = ({
                                 key={sticker.id}
                                 backgroundColor={background}
                                 activeOpacity={0.7}
-                                onPress={() => handleOpenSticker(sticker)}
+                                onPress={() => handleOpenSticker(sticker, code)}
                             >
                                 <SubTitle>
                                     {code}{sticker.number}

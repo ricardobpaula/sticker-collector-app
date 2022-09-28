@@ -37,6 +37,7 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({children}) => {
         async function loadStorage() {
             const response = await getAuthStorage()
             setUserId(response ? response.userId : undefined)
+            api.defaults.headers['user-id'] = response ? response.userId : undefined
             setLoading(false)
         }
         loadStorage()
