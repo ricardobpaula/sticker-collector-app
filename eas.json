@@ -14,11 +14,15 @@
       },
       "preview": {
         "distribution": "internal",
+        "channel": "preview",
         "android": {
           "buildType": "apk"
         }
       },
-      "production": {}
+      "production": {
+        "distribution": "internal",
+        "channel": "preview"
+      }
     },
     "submit": {
       "production": {}

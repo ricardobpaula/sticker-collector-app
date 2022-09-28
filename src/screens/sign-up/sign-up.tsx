@@ -57,7 +57,7 @@ export const SignUp:React.FC = () => {
         <Container>
             <Content>
                 <Header>
-                    <Title>Sejá bem vindo!</Title>
+                    <Title>Seja bem vindo!</Title>
                 </Header>
                 <Form>
                     <Input 

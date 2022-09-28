@@ -8,7 +8,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "532e146d-65fd-4081-88fa-b501ba039ad2"
+        "projectId": "6b56d208-603d-4fcb-9bcd-16f3070caa8b"
       }
     },
     "android": {
@@ -19,7 +19,7 @@
     },
     "runtimeVersion": "1.0.0",
     "updates": {
-      "url": "https://u.expo.dev/532e146d-65fd-4081-88fa-b501ba039ad2"
+      "url": "https://u.expo.dev/6b56d208-603d-4fcb-9bcd-16f3070caa8b"
     }
   }
 }
