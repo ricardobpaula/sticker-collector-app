@@ -9,7 +9,7 @@ import {
     Content,
     ListSection
 } from './styles'
-import { Alert } from 'react-native'
+import { Alert, RefreshControl } from 'react-native'
 import { api } from '../../services/api'
 import { useAuth } from '../../hooks/useAuth'
 import { SectionItem } from '../../components/section-item/section-item'
@@ -18,12 +18,19 @@ import StickerForm, { StickerFormHandles } from '../../components/sticker-form/s
 export const Dashboard:React.FC = () => {
     const [sections, setSections] = useState<Section[]>([])
     const [loaging, setLoading] = useState<boolean>(true)
+    const [refreshing, setRefreshing] = useState<boolean>(false)
     const { userId } = useAuth()
 
     const modalRef = useRef<StickerFormHandles>(null)
 
     const handleOpenSticker = (sticker: Sticker, sectionCode: string) => {
         modalRef.current?.openModal(sticker, sectionCode)
+    }
+
+    const handleRefresh = () => {
+        setRefreshing(true)
+        setLoading(true)
+        loadStickers()
     }
 
     const handleUpdateSticker = () => {
@@ -40,10 +47,12 @@ export const Dashboard:React.FC = () => {
             })
             setSections(sections)
             setLoading(false)
+            setRefreshing(false)
         } catch (error) {
             console.error(error.message)
             Alert.alert('Error loading stickers')
             setLoading(false)
+            setRefreshing(false)
         }
     }
 
@@ -71,6 +80,8 @@ export const Dashboard:React.FC = () => {
                 />
                 <ListSection
                     data={sections}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={item => item.id}
                     renderItem={({item}) => {
                         return (
                             <SectionItem 
@@ -80,6 +91,15 @@ export const Dashboard:React.FC = () => {
                             />
                             )
                     }}
+                    refreshing={refreshing}
+                    onRefresh={handleRefresh}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={handleRefresh}
+                            tintColor={colors.secondary[500]}
+                        />
+                    }
                 />
             </Content>
             <StickerForm

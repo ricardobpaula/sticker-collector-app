@@ -5,7 +5,7 @@ import { colors } from '../../styles/theme'
 
 export const Container = styled(SafeAreaView)`
     flex: 1;
-    background-color: ${colors.gray[700]};
+    background-color: ${colors.gray[500]};
 `
 
 export const Content = styled(View)`
