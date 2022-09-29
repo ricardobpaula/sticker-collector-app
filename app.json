@@ -3,13 +3,10 @@
     "name": "sticker-collector-app",
     "slug": "sticker-collector-app",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "6b56d208-603d-4fcb-9bcd-16f3070caa8b"
-      }
+    "userInterfaceStyle": "dark",
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/6b56d208-603d-4fcb-9bcd-16f3070caa8b"
     },
     "android": {
       "package": "com.ricardobpaula.stickercollectorapp"
@@ -17,9 +14,14 @@
     "ios": {
       "bundleIdentifier": "com.ricardobpaula.stickercollectorapp"
     },
-    "runtimeVersion": "1.0.0",
-    "updates": {
-      "url": "https://u.expo.dev/6b56d208-603d-4fcb-9bcd-16f3070caa8b"
-    }
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6b56d208-603d-4fcb-9bcd-16f3070caa8b"
+      }
+    },
+    "runtimeVersion": "46.0.0"
   }
 }

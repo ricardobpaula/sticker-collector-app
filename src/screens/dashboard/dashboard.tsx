@@ -13,7 +13,12 @@ import { Alert, RefreshControl } from 'react-native'
 import { api } from '../../services/api'
 import { useAuth } from '../../hooks/useAuth'
 import { SectionItem } from '../../components/section-item/section-item'
-import StickerForm, { StickerFormHandles } from '../../components/sticker-form/sticker-form'
+import { DashboardStackParamsList } from '../../routes/app.routes'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { useNavigation } from '@react-navigation/native'
+// import StickerForm, { StickerFormHandles } from '../../components/sticker-form/sticker-form'
+
+type DashboardScreenProp = NativeStackNavigationProp<DashboardStackParamsList, 'Dashboard'>
 
 export const Dashboard:React.FC = () => {
     const [sections, setSections] = useState<Section[]>([])
@@ -21,19 +26,17 @@ export const Dashboard:React.FC = () => {
     const [refreshing, setRefreshing] = useState<boolean>(false)
     const { userId } = useAuth()
 
-    const modalRef = useRef<StickerFormHandles>(null)
+    const navigation = useNavigation<DashboardScreenProp>()
 
     const handleOpenSticker = (sticker: Sticker, sectionCode: string) => {
-        modalRef.current?.openModal(sticker, sectionCode)
+        navigation.navigate('StickerForm', {
+            sticker,
+            sectionCode
+        })
     }
 
     const handleRefresh = () => {
         setRefreshing(true)
-        setLoading(true)
-        loadStickers()
-    }
-
-    const handleUpdateSticker = () => {
         setLoading(true)
         loadStickers()
     }
@@ -80,6 +83,7 @@ export const Dashboard:React.FC = () => {
                 />
                 <ListSection
                     data={sections}
+                    initialNumToRender={5}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={item => item.id}
                     renderItem={({item}) => {
@@ -102,11 +106,6 @@ export const Dashboard:React.FC = () => {
                     }
                 />
             </Content>
-            <StickerForm
-                ownerId={userId}
-                ref={modalRef}
-                onHandleSubmit={handleUpdateSticker}
-            />
             
         </Container>
     )

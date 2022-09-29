@@ -1,28 +1,17 @@
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    Animated
-} from 'react-native'
-
-import styled from 'styled-components/native'
-
 import CheckBox from '@react-native-community/checkbox'
+import { SafeAreaView, Text, View } from 'react-native'
+import styled from 'styled-components'
 import { colors } from '../../styles/theme'
 
-export const Container = styled(View)`
+export const Container = styled(SafeAreaView)`
+    flex: 1;
     background-color: ${colors.gray[700]};
-    align-items: center;
-    padding: 20px 40px;
-    justify-content: flex-end;
-    margin-bottom: 20px;
 `
 
-export const Title = styled(Text)`
-    font-size: 16px;
-    font-weight: bold;
-    color: ${colors.secondary[500]};
-    margin-bottom: 20px;
+export const Content = styled(View)`
+    flex: 1;
+    padding: 20px 20px;
+    align-items: center;
 `
 
 export const Label = styled(Text)`
@@ -47,8 +36,4 @@ export const CustomCheckbox = styled(CheckBox)`
     height: 20px;
     width: 20px;
     border-radius: 20px;
-`
-
-export const DismissArea = styled(TouchableOpacity)`
-    flex: 1;
 `

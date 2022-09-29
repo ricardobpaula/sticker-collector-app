@@ -10,9 +10,9 @@
     <integer>0</integer>
     <key>EXUpdatesReleaseChannel</key>
     <string>default</string>
-    <key>EXUpdatesRuntimeVersion</key>
-    <string>1.0.0</string>
     <key>EXUpdatesURL</key>
     <string>https://u.expo.dev/6b56d208-603d-4fcb-9bcd-16f3070caa8b</string>
+    <key>EXUpdatesRuntimeVersion</key>
+    <string>46.0.0</string>
   </dict>
 </plist>

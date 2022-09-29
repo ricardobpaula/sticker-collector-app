@@ -1,8 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import { Alert, Dimensions, Platform } from 'react-native'
-import { Modalize } from 'react-native-modalize'
+import { Alert, Animated, Dimensions, Modal, ModalProps, Platform } from 'react-native'
 import { api } from '../../services/api'
-import { colors } from '../../styles/theme'
 import { Button } from '../button/button'
 import CustomModal, { CustomModalHandles } from '../custom-modal/custom-modal'
 import { Input } from '../Input/input'
@@ -12,22 +10,24 @@ import {
     Form,
     CustomCheckbox,
     Label,
-    Title
+    Title,
+    DismissArea
 } from './styles'
 
 export interface StickerFormHandles {
     openModal: (sticker: Sticker, sectionCode: string) => void
 }
 
-interface StickerFormProps {
+type StickerFormProps = ModalProps &  {
     ownerId: string
     onHandleSubmit: () => void
 }
 
 const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerFormProps> = 
-    ({  ownerId, onHandleSubmit }, ref) => {
-    const modalRef = useRef<Modalize>(null)
+    ({  ownerId, onHandleSubmit, ...rest }, ref) => {
+    const [animatedHeight] = useState(new Animated.Value(0))
 
+    const [visible, setVisible] = useState<boolean>(false)
     const [sticker, setSticker] = useState<Sticker>()
     const [sectionCode, setSectionCode] = useState<string>()
     const [have, setHave] = useState<boolean>(false)
@@ -47,21 +47,38 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
             }
             )
             onHandleSubmit()
-            modalRef.current?.close()
         } catch (error) {
             console.error(error)
             Alert.alert('Error loading stickers')
         }
     }
 
+  const onOpenAnimate = Animated.timing(animatedHeight, {
+    useNativeDriver: false,
+    toValue: 0,
+    duration: 250
+  })
+
+  const onCloseAnimate = Animated.timing(animatedHeight, {
+    useNativeDriver: false,
+    toValue: 0,
+    duration: 250
+  })
+
     const openModal = (sticker: Sticker, sectionCode: string) => {
+        setVisible(true)
+        onOpenAnimate.start()
         setSticker(sticker)
         setSectionCode(sectionCode)
         setHave(sticker.have)
         setPasted(sticker.pasted)
         setObs(sticker.obs)
-        modalRef.current?.open()
     }
+
+    const close = () => {
+        onCloseAnimate.start(() => setVisible(false))
+    }
+
     useImperativeHandle(ref, () => {
         return {
           openModal
@@ -69,14 +86,17 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
       })
 
     return (
-            <Modalize
-                ref={modalRef}
-                modalHeight={Dimensions.get('window').height * 0.4}
-                modalStyle={{flex: 1, backgroundColor: colors.gray[700]}}
-                scrollViewProps={{ showsVerticalScrollIndicator: false }}
-                keyboardAvoidingBehavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardAvoidingOffset={Platform.OS === 'ios' ? 64 : 0}
+            <Modal
+                animationType='fade'
+                visible={visible}
+                transparent
+                {...rest}
             >
+
+            <DismissArea
+              onPress={close}
+            />
+
             <Container>
                 <Title>Figurinha {sectionCode}{sticker?.number}</Title>
                 <Form>
@@ -106,7 +126,7 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
                 </Form>
                 <Button title='Salvar' onPress={handleSubmit} />
             </Container>
-        </Modalize>
+        </Modal>
     )
 }
 
