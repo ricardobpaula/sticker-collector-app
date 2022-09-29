@@ -1,18 +1,65 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Alert } from 'react-native'
+
+import { useClipboard } from '@react-native-clipboard/clipboard'
 import { Button } from '../../components/button/button'
+import { Loading } from '../../components/loading/loading'
 import { useAuth } from '../../hooks/useAuth'
+import { api } from '../../services/api'
 
 import {
     Container,
-    Content
+    Content,
+    Export
 } from './styles'
 
 export const Settings:React.FC = () => {
-    const { logout } = useAuth()
+    const [loading, setLoading] = useState<boolean>(false)
+    
+    const [data, setString] = useClipboard()
+    const { userId, logout } = useAuth()
+
+    const loadStickers = async () => {
+        setLoading(true)
+        try {
+            const { data: { sections } } = await api.get(`/stickers?have=false`, {
+                headers: {
+                    userId
+                }
+            })
+            copyToClipboard(sections)
+        } catch (error) {
+            Alert.alert('Error loading stickers')
+            setLoading(false)
+        }
+    }
+
+    const copyToClipboard = (sections: Section[]) => {
+        const text = sections.reduce((acc, section) => {
+            const title = `${section.name}`
+            const stickers = section.stickers.reduce((value, sticker,index, arr) =>{
+                return value + 
+                    `${section.code}${sticker.number}${index === arr.length -1 ? '' : ', '}`
+            }, '')
+            return `${acc}\n${title}\n${stickers}\n\n`//acc + (title + stickers)
+        }, '')
+        setString(text)
+        setLoading(false)
+    }
+
+    const handleExportSticker = () => {
+        loadStickers()
+    }
+
+    if(loading) return <Loading />
+
     return (
         <Container>
             <Content>
-                <Button onPress={() => logout()} title='Logout'/>
+                <Export>
+                    <Button onPress={handleExportSticker} title='Exportar Faltantes'/>
+                </Export>
+                <Button onPress={() => logout()} title='Sair'/>
             </Content>
         </Container>
     )

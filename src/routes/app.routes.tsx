@@ -47,6 +47,7 @@ export const AppRoutes:React.FC = () => {
                 name='DashboardStack'
                 component={DashboardStack}
                 options={{
+                    title: 'Figurinhas',
                     tabBarIcon: () => <MaterialIcon 
                                         name='sports-soccer'
                                         size={25}
@@ -58,6 +59,7 @@ export const AppRoutes:React.FC = () => {
                 name='Settings'
                 component={Settings}
                 options={{
+                    title: 'Configurações',
                     tabBarIcon: () => <MaterialIcon 
                                         name='settings'
                                         size={25}

@@ -14,3 +14,7 @@ export const Content = styled(View)`
     align-items: center;
     justify-content: space-around;
 `
+
+export const Export = styled(View)`
+    width: 100%;
+`
