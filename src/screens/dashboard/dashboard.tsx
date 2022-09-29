@@ -9,31 +9,25 @@ import {
     Content,
     ListSection
 } from './styles'
+
 import { Alert, RefreshControl } from 'react-native'
 import { api } from '../../services/api'
 import { useAuth } from '../../hooks/useAuth'
 import { SectionItem } from '../../components/section-item/section-item'
-import { DashboardStackParamsList } from '../../routes/app.routes'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { useNavigation } from '@react-navigation/native'
 import StickerForm, { StickerFormHandles } from '../../components/sticker-form/sticker-form'
-
-type DashboardScreenProp = NativeStackNavigationProp<DashboardStackParamsList, 'Dashboard'>
+import StickerFilter, { StickerFilterHandles } from '../../components/sticker-filter/sticker-filter'
 
 export const Dashboard:React.FC = () => {
     const [sections, setSections] = useState<Section[]>([])
     const [loaging, setLoading] = useState<boolean>(true)
     const [refreshing, setRefreshing] = useState<boolean>(false)
+    const [filterSelected, setFilterSelected] = useState<number>(1)
     const { userId } = useAuth()
 
     const modalRef = useRef<StickerFormHandles>()
-    // const navigation = useNavigation<DashboardScreenProp>()
+    const modalFilterRef = useRef<StickerFilterHandles>()
 
     const handleOpenSticker = (sticker: Sticker, sectionCode: string) => {
-        // navigation.navigate('StickerForm', {
-        //     sticker,
-        //     sectionCode
-        // })
         modalRef.current?.openModal(sticker, sectionCode)
     }
 
@@ -48,9 +42,38 @@ export const Dashboard:React.FC = () => {
         loadStickers()
     }
 
-    const loadStickers = async () => {
+    const handleChangeFilter = () => {
+        modalFilterRef.current?.openModal()
+    }
+
+    const handleOnChangeFilter = (value: number) => {
+        if(value === filterSelected) {
+            return
+        }
+        
+        let filter = ''
+
+        switch (value) {
+            case 1:
+                filter = ''
+                break
+            case 2:
+                filter = '?have=true'
+                break
+            case 3:
+                filter = '?have=true&pasted=true'
+                break
+            case 4:
+                filter = '?have=false&pasted=false'
+        }
+        setFilterSelected(value)
+        setLoading(true)
+        loadStickers(filter)
+    }
+
+    const loadStickers = async (filter: string = '') => {
         try {
-            const { data: { sections } } = await api.get('/stickers', {
+            const { data: { sections } } = await api.get(`/stickers${filter}`, {
                 headers: {
                     userId
                 }
@@ -59,7 +82,6 @@ export const Dashboard:React.FC = () => {
             setLoading(false)
             setRefreshing(false)
         } catch (error) {
-            console.error(error.message)
             Alert.alert('Error loading stickers')
             setLoading(false)
             setRefreshing(false)
@@ -87,6 +109,7 @@ export const Dashboard:React.FC = () => {
                     progress={progress}
                     size={678}
                     progressColor={colors.secondary[500]}
+                    onPress={handleChangeFilter}
                 />
                 <ListSection
                     data={sections}
@@ -118,6 +141,11 @@ export const Dashboard:React.FC = () => {
                 ownerId={userId}
                 ref={modalRef}
                 onHandleSubmit={handleUpdateSticker}
+            />
+            <StickerFilter
+                ref={modalFilterRef}
+                value={filterSelected}
+                onHandleSubmit={(value) =>handleOnChangeFilter(value)}
             />
         </Container>
     )

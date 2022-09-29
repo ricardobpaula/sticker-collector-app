@@ -47,7 +47,6 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
             )
             onHandleSubmit()
         } catch (error) {
-            console.error(error)
             Alert.alert('Error loading stickers')
         }
     }

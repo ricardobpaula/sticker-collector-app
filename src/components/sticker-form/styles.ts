@@ -1,8 +1,7 @@
 import {
     View,
     Text,
-    TouchableOpacity,
-    Animated
+    TouchableOpacity
 } from 'react-native'
 
 import styled from 'styled-components/native'

@@ -5,18 +5,12 @@ import { Dashboard } from '../screens/dashboard/dashboard'
 import { Settings } from '../screens/settings/settings'
 import { colors } from '../styles/theme'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { StickerForm } from '../screens/sticker-form/sticker-form'
-import { useRoute } from '@react-navigation/native'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 const { Navigator: NavigatorStack, Screen:ScreenStack } = createNativeStackNavigator()
 
 export type DashboardStackParamsList = {
     Dashboard: undefined
-    StickerForm: {
-        sticker: Sticker
-        sectionCode: string
-    }
 }
 
 const DashboardStack:React.FC = () => {
@@ -34,8 +28,6 @@ const DashboardStack:React.FC = () => {
                 component={Dashboard} 
                 options={{headerShown: false}}
             />
-            
-            <ScreenStack name='StickerForm' component={StickerForm} />
             
         </NavigatorStack>
     )

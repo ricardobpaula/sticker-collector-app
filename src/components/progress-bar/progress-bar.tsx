@@ -1,4 +1,8 @@
 import React from 'react'
+import {
+    TouchableOpacity,
+    TouchableOpacityProps
+} from 'react-native'
 import { 
     Container, 
     Title,
@@ -6,7 +10,7 @@ import {
     ProgressBarContent
 } from './styles'
 
-interface ProgressBarProps {
+type ProgressBarProps = TouchableOpacityProps & {
     title: string
     progress: number
     progressColor: string
@@ -17,14 +21,24 @@ export const ProgressBar:React.FC<ProgressBarProps> = ({
     title,
     progress,
     progressColor,
-    size
+    size,
+    ...rest
 }) => {
 
     const percent = Number(((progress * 100) / size).toFixed(2))
 
     return (
         <Container>
-            <Title>{title}: {percent}%</Title>
+            <TouchableOpacity
+                activeOpacity={0.7}
+                {...rest}
+            >
+                <Title
+                    color={progressColor}
+                >
+                    {title}: {percent}%
+                </Title>
+            </TouchableOpacity>
             <ProgressBarContainer>
                 <ProgressBarContent
                     color={progressColor}

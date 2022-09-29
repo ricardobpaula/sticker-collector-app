@@ -20,10 +20,10 @@ export const Container = styled(View)`
     width: 100%;
 `
 
-export const Title = styled(Text)`
+export const Title = styled(Text)<TitleProps>`
     font-size: 16px;
     font-weight: bold;
-    color: ${colors.secondary[500]};
+    color: ${props => props.color};
 `
 
 export const ProgressBarContainer = styled(View)`

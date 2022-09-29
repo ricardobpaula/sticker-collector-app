@@ -42,7 +42,6 @@ export const Content = styled(View)`
     flex-wrap: wrap;
     flex-grow: 5;
     align-items: center;
-    justify-content: space-between;
     margin: 10px;
     padding: 5px 0px;
     border-radius: 25px;
