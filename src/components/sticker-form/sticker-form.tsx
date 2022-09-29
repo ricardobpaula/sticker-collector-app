@@ -1,14 +1,13 @@
-import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import { Alert, Animated, Dimensions, Modal, ModalProps, Platform } from 'react-native'
+import React, { forwardRef, useImperativeHandle, useState } from 'react'
+import { Alert, Animated, Modal, ModalProps } from 'react-native'
 import { api } from '../../services/api'
 import { Button } from '../button/button'
-import CustomModal, { CustomModalHandles } from '../custom-modal/custom-modal'
+import { CheckBox } from '../checkbox/checkbox'
 import { Input } from '../Input/input'
 import { 
     Container, 
     Row,
     Form,
-    CustomCheckbox,
     Label,
     Title,
     DismissArea
@@ -53,17 +52,17 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
         }
     }
 
-  const onOpenAnimate = Animated.timing(animatedHeight, {
+    const onOpenAnimate = Animated.timing(animatedHeight, {
     useNativeDriver: false,
     toValue: 0,
     duration: 250
-  })
+    })
 
-  const onCloseAnimate = Animated.timing(animatedHeight, {
+    const onCloseAnimate = Animated.timing(animatedHeight, {
     useNativeDriver: false,
     toValue: 0,
     duration: 250
-  })
+    })
 
     const openModal = (sticker: Sticker, sectionCode: string) => {
         setVisible(true)
@@ -81,9 +80,9 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
 
     useImperativeHandle(ref, () => {
         return {
-          openModal
+            openModal
         }
-      })
+        })
 
     return (
             <Modal
@@ -102,17 +101,16 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
                 <Form>
                     <Row>
                         <Label>Possui?</Label>
-                        <CustomCheckbox 
+                        <CheckBox
+                            onChangeValue={setHave}
                             value={have}
-                            onValueChange={(newValue)=>setHave(newValue)}
                         />
                     </Row>
-
                     <Row>
                         <Label>Colada?</Label>
-                        <CustomCheckbox 
+                        <CheckBox
+                            onChangeValue={setPasted}
                             value={pasted}
-                            onValueChange={(newValue)=>setPasted(newValue)}
                         />
                     </Row>
         

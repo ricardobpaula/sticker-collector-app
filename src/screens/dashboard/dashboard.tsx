@@ -16,7 +16,7 @@ import { SectionItem } from '../../components/section-item/section-item'
 import { DashboardStackParamsList } from '../../routes/app.routes'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useNavigation } from '@react-navigation/native'
-// import StickerForm, { StickerFormHandles } from '../../components/sticker-form/sticker-form'
+import StickerForm, { StickerFormHandles } from '../../components/sticker-form/sticker-form'
 
 type DashboardScreenProp = NativeStackNavigationProp<DashboardStackParamsList, 'Dashboard'>
 
@@ -26,13 +26,20 @@ export const Dashboard:React.FC = () => {
     const [refreshing, setRefreshing] = useState<boolean>(false)
     const { userId } = useAuth()
 
-    const navigation = useNavigation<DashboardScreenProp>()
+    const modalRef = useRef<StickerFormHandles>()
+    // const navigation = useNavigation<DashboardScreenProp>()
 
     const handleOpenSticker = (sticker: Sticker, sectionCode: string) => {
-        navigation.navigate('StickerForm', {
-            sticker,
-            sectionCode
-        })
+        // navigation.navigate('StickerForm', {
+        //     sticker,
+        //     sectionCode
+        // })
+        modalRef.current?.openModal(sticker, sectionCode)
+    }
+
+    const handleUpdateSticker = () => {
+        setLoading(true)
+        loadStickers()
     }
 
     const handleRefresh = () => {
@@ -105,8 +112,13 @@ export const Dashboard:React.FC = () => {
                         />
                     }
                 />
+                
             </Content>
-            
+            <StickerForm
+                ownerId={userId}
+                ref={modalRef}
+                onHandleSubmit={handleUpdateSticker}
+            />
         </Container>
     )
 }

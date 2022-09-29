@@ -24,7 +24,7 @@ export const ProgressBar:React.FC<ProgressBarProps> = ({
 
     return (
         <Container>
-            <Title>{title} - {percent}%</Title>
+            <Title>{title}: {percent}%</Title>
             <ProgressBarContainer>
                 <ProgressBarContent
                     color={progressColor}
