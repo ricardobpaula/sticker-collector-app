@@ -1,12 +1,11 @@
 import {
     View,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native'
 
 import styled from 'styled-components/native'
 
-import CheckBox from '@react-native-community/checkbox'
 import { colors } from '../../styles/theme'
 
 export const Container = styled(View)`
@@ -40,12 +39,6 @@ export const Row =styled(View)`
 export const Form = styled(View)`
     width: 100%;
     margin-bottom: 20px;
-`
-
-export const CustomCheckbox = styled(CheckBox)`
-    height: 20px;
-    width: 20px;
-    border-radius: 20px;
 `
 
 export const DismissArea = styled(TouchableOpacity)`

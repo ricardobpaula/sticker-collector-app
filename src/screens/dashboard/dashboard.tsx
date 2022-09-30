@@ -46,11 +46,7 @@ export const Dashboard:React.FC = () => {
         modalFilterRef.current?.openModal()
     }
 
-    const handleOnChangeFilter = (value: number) => {
-        if(value === filterSelected) {
-            return
-        }
-        
+    const handleOnChangeFilter = (value: number) => {        
         let filter = ''
 
         switch (value) {
@@ -65,6 +61,8 @@ export const Dashboard:React.FC = () => {
                 break
             case 4:
                 filter = '?have=false&pasted=false'
+            case 5:
+                filter = '?repeated=true'
         }
         setFilterSelected(value)
         setLoading(true)

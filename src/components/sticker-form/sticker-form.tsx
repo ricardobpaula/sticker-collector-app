@@ -4,6 +4,7 @@ import { api } from '../../services/api'
 import { Button } from '../button/button'
 import { CheckBox } from '../checkbox/checkbox'
 import { Input } from '../Input/input'
+import { NumberSelector } from '../number-selector/number-selector'
 import { 
     Container, 
     Row,
@@ -32,13 +33,15 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
     const [have, setHave] = useState<boolean>(false)
     const [pasted, setPasted] = useState<boolean>(false)
     const [obs, setObs] = useState<string>('')
+    const [repeated, setRepeated] = useState<number>()
 
     const handleSubmit = async () => {
         try {
             await api.put(`/stickers/${sticker.id}`,{
                 have,
                 pasted,
-                obs
+                obs,
+                repeated
             },{
                 headers: {
                     userId: ownerId
@@ -71,6 +74,7 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
         setHave(sticker.have)
         setPasted(sticker.pasted)
         setObs(sticker.obs)
+        setRepeated(sticker.repeated)
     }
 
     const close = () => {
@@ -108,8 +112,9 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
                     <Row>
                         <Label>Colada?</Label>
                         <CheckBox
-                            onChangeValue={setPasted}
+                            onChangeValue={(value) => setPasted(value)}
                             value={pasted}
+                            disabled={!have}
                         />
                     </Row>
         
@@ -119,6 +124,13 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
                         numberOfLines={5}
                         value={obs}
                         onChangeText={setObs}
+                    />
+
+                    <NumberSelector
+                        title='Repetidas'
+                        value={repeated}
+                        disabled={!have}
+                        onChangeValue={setRepeated}
                     />
                 </Form>
                 <Button title='Salvar' onPress={handleSubmit} />

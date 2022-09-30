@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+
+import {
+    TouchableOpacityProps    
+} from 'react-native'
+
 import { Container } from './styles'
 
 import { MaterialIcons } from '@expo/vector-icons'
 import { colors } from '../../styles/theme'
 
-interface CheckBoxProps {
+type CheckBoxProps = TouchableOpacityProps & {
     value: boolean
     onChangeValue: (value: boolean) => void
 }
 
-export const CheckBox:React.FC<CheckBoxProps> = ({value, onChangeValue}) => {
+export const CheckBox:React.FC<CheckBoxProps> = (
+    {value, onChangeValue, ...rest}) => {
     const [checked, setChecked] = useState<boolean>(value)
     
     const onSetValue = () => {
@@ -20,6 +26,7 @@ export const CheckBox:React.FC<CheckBoxProps> = ({value, onChangeValue}) => {
 
     return (
         <Container
+            {...rest}    
             activeOpacity={0.7}
             onPress={onSetValue}
         >

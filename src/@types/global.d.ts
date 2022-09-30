@@ -6,6 +6,7 @@ export declare global {
         obs: string
         have: boolean
         pasted: boolean
+        repeated: number
     }
     
     interface Section {
