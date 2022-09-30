@@ -19,22 +19,22 @@ export const Settings:React.FC = () => {
     
     const { userId, logout } = useAuth()
 
-    const loadStickers = async () => {
+    const loadStickers = async (filter: string, type: string) => {
         setLoading(true)
         try {
-            const { data: { sections } } = await api.get(`/stickers?have=false`, {
+            const { data: { sections } } = await api.get(`/stickers${filter}`, {
                 headers: {
                     userId
                 }
             })
-            copyToClipboard(sections)
+            copyToClipboard(sections, type)
         } catch (error) {
             Alert.alert('Error loading stickers')
             setLoading(false)
         }
     }
 
-    const copyToClipboard = async (sections: Section[]) => {
+    const copyToClipboard = async (sections: Section[], type: string) => {
         const text = sections.reduce((acc, section, index, arr) => {
             const title = `${section.name}`
             const stickers = section.stickers.reduce((value, sticker,index, arr) =>{
@@ -44,12 +44,12 @@ export const Settings:React.FC = () => {
             return `${acc}\n${title}\n${stickers}${index < arr.length -1 ? '\n' : ''}`
         }, '')
         await Clipboard.setStringAsync(text)
-        Alert.alert('Suas figurinhas faltantes foram copiadas para área de transferencia')
+        Alert.alert(`Suas figurinhas ${type} foram copiadas para área de transferencia`)
         setLoading(false)
     }
 
-    const handleExportSticker = () => {
-        loadStickers()
+    const handleExportSticker = (filter: string, type: string) => {
+        loadStickers(filter, type)
     }
 
     if(loading) return <Loading />
@@ -58,7 +58,8 @@ export const Settings:React.FC = () => {
         <Container>
             <Content>
                 <Export>
-                    <Button onPress={handleExportSticker} title='Exportar Faltantes'/>
+                    <Button onPress={() => handleExportSticker('?have=false', 'faltantes')} title='Exportar Faltantes'/>
+                    <Button onPress={() => handleExportSticker('?repeated=true', 'repetidas')} title='Exportar Repetidas'/>
                 </Export>
                 <Button onPress={() => logout()} title='Sair'/>
             </Content>
