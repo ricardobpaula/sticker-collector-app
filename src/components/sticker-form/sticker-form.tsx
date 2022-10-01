@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react'
-import { Alert, Animated, Modal, ModalProps } from 'react-native'
+import { Alert, Animated, KeyboardAvoidingView, Modal, ModalProps, Platform } from 'react-native'
 import { api } from '../../services/api'
 import { Button } from '../button/button'
 import { CheckBox } from '../checkbox/checkbox'
@@ -88,53 +88,57 @@ const StickerForm:React.ForwardRefRenderFunction<StickerFormHandles, StickerForm
         })
 
     return (
-            <Modal
-                animationType='fade'
-                visible={visible}
-                transparent
-                {...rest}
+        <Modal
+            animationType='fade'
+            visible={visible}
+            transparent
+            {...rest}
+        >
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={{flex: 1}}
             >
+                <DismissArea
+                onPress={close}
+                />
 
-            <DismissArea
-              onPress={close}
-            />
-
-            <Container>
-                <Title>Figurinha {sectionCode}{sticker?.number}</Title>
-                <Form>
-                    <Row>
-                        <Label>Possui?</Label>
-                        <CheckBox
-                            onChangeValue={setHave}
-                            value={have}
+                <Container>
+                    <Title>Figurinha {sectionCode}{sticker?.number}</Title>
+                    <Form>
+                        <Row>
+                            <Label>Possui?</Label>
+                            <CheckBox
+                                onChangeValue={setHave}
+                                value={have}
+                            />
+                        </Row>
+                        <Row>
+                            <Label>Colada?</Label>
+                            <CheckBox
+                                onChangeValue={(value) => setPasted(value)}
+                                value={pasted}
+                                disabled={!have}
+                            />
+                        </Row>
+            
+                        <Input 
+                            label='Observação' 
+                            multiline
+                            numberOfLines={5}
+                            value={obs}
+                            onChangeText={setObs}
                         />
-                    </Row>
-                    <Row>
-                        <Label>Colada?</Label>
-                        <CheckBox
-                            onChangeValue={(value) => setPasted(value)}
-                            value={pasted}
+
+                        <NumberSelector
+                            title='Repetidas'
+                            value={repeated}
                             disabled={!have}
+                            onChangeValue={setRepeated}
                         />
-                    </Row>
-        
-                    <Input 
-                        label='Observação' 
-                        multiline
-                        numberOfLines={5}
-                        value={obs}
-                        onChangeText={setObs}
-                    />
-
-                    <NumberSelector
-                        title='Repetidas'
-                        value={repeated}
-                        disabled={!have}
-                        onChangeValue={setRepeated}
-                    />
                 </Form>
                 <Button title='Salvar' onPress={handleSubmit} />
             </Container>
+            </KeyboardAvoidingView>
         </Modal>
     )
 }

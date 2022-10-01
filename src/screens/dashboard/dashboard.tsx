@@ -61,8 +61,10 @@ export const Dashboard:React.FC = () => {
                 break
             case 4:
                 filter = '?have=false&pasted=false'
+                break
             case 5:
                 filter = '?repeated=true'
+                break
         }
         setFilterSelected(value)
         setLoading(true)
