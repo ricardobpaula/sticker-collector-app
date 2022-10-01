@@ -1,19 +1,21 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface AuthStorageProps {
-    userId: string
+    user: User
 }
 
 export async function getAuthStorage():Promise<AuthStorageProps|undefined> {
-    const userId = await AsyncStorage.getItem('@StickerCollector-APP:userId')
+    const userStorage = await AsyncStorage.getItem('@StickerCollector-APP:user')
 
-    if (!userId){
+    if (!userStorage){
         return undefined
     }
 
-    return { userId }
+    const user = JSON.parse(userStorage)
+
+    return { user }
 }
 
-export async function setAuthStorage({ userId } :AuthStorageProps):Promise<void> {
-    await AsyncStorage.setItem('@StickerCollector-APP:userId', userId)
+export async function setAuthStorage({ user } :AuthStorageProps):Promise<void> {
+    await AsyncStorage.setItem('@StickerCollector-APP:user', JSON.stringify(user))
 }

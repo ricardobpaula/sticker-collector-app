@@ -1,4 +1,4 @@
-import { SafeAreaView, View } from 'react-native'
+import { SafeAreaView, View, Text } from 'react-native'
 
 import styled from 'styled-components/native'
 import { colors } from '../../styles/theme'
@@ -13,6 +13,15 @@ export const Content = styled(View)`
     padding: 20px 20px;
     align-items: center;
     justify-content: space-around;
+`
+
+export const Header = styled(View)`
+    width: 100%;
+`
+
+export const Title = styled(Text)`
+    font-size: 36px;
+    color: ${colors.blue[500]};
 `
 
 export const Export = styled(View)`

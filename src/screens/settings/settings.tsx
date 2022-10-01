@@ -11,22 +11,20 @@ import { api } from '../../services/api'
 import {
     Container,
     Content,
-    Export
+    Export,
+    Header,
+    Title
 } from './styles'
 
 export const Settings:React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false)
     
-    const { userId, logout } = useAuth()
+    const { user, logout } = useAuth()
 
     const loadStickers = async (filter: string, type: string) => {
         setLoading(true)
         try {
-            const { data: { sections } } = await api.get(`/stickers${filter}`, {
-                headers: {
-                    userId
-                }
-            })
+            const { data: { sections } } = await api.get(`/stickers${filter}`)
             copyToClipboard(sections, type)
         } catch (error) {
             Alert.alert('Error loading stickers')
@@ -57,6 +55,10 @@ export const Settings:React.FC = () => {
     return (
         <Container>
             <Content>
+                <Header>
+                    <Title>Olá,</Title>
+                    <Title>{user.name}</Title>
+                </Header>
                 <Export>
                     <Button onPress={() => handleExportSticker('?have=false', 'faltantes')} title='Exportar Faltantes'/>
                     <Button onPress={() => handleExportSticker('?repeated=true', 'repetidas')} title='Exportar Repetidas'/>

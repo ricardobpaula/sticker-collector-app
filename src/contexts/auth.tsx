@@ -17,7 +17,7 @@ interface RequestProps {
 interface AuthContextProps {
     loading: boolean
     signed: boolean
-    userId: string
+    user: User
     login(request: RequestProps): Promise<void>
     logout(): void
 }
@@ -30,14 +30,14 @@ type AuthProviderProps = {
 export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
 
 export const AuthProvider:React.FC<AuthProviderProps> = ({children}) => {
-    const [userId, setUserId] = useState<string>()
+    const [user, setUser] = useState<User>()
     const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
         async function loadStorage() {
             const response = await getAuthStorage()
-            setUserId(response ? response.userId : undefined)
-            api.defaults.headers['user-id'] = response ? response.userId : undefined
+            setUser(response ? response.user : undefined)
+            api.defaults.headers['user-id'] = response ? response.user.userId : undefined
             setLoading(false)
         }
         loadStorage()
@@ -45,12 +45,12 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({children}) => {
 
     async function login ({ email }: RequestProps) {
         try {
-            const { data: { userId } } = await api.post<any>('/users/auth', {
+            const { data } = await api.post<User>('/users/auth', {
                 email
             })
-            api.defaults.headers['user-id'] = userId
-            setUserId(userId)
-            await setAuthStorage({userId})
+            api.defaults.headers['user-id'] = data.userId
+            setUser(data)
+            await setAuthStorage({ user: data})
         } catch (error) {
             Alert.alert(error.response.data.error)
         }
@@ -58,15 +58,15 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({children}) => {
 
     function logout() {
         AsyncStorage.clear()
-        setUserId(undefined)
+        setUser(undefined)
     }
     
     return (
         <AuthContext.Provider
             value={{
                 loading,
-                signed: !!userId,
-                userId,
+                signed: !!user,
+                user,
                 login,
                 logout
             }}

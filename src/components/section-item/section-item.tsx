@@ -1,7 +1,5 @@
-import React, { useRef, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import { colors } from "../../styles/theme";
-import StickerForm, { StickerFormHandles }  from "../sticker-form/sticker-form"
+import React from "react"
+import { colors } from "../../styles/theme"
 
 import { 
     Container,

@@ -25,7 +25,7 @@ export const Dashboard:React.FC = () => {
     const [progressColor, setProgressColor] = useState<string>(colors.blue[500])
     const [progressText, setProgressText] = useState<string>('Concluído')
 
-    const { userId } = useAuth()
+    const { user } = useAuth()
 
     const modalRef = useRef<StickerFormHandles>()
     const modalFilterRef = useRef<StickerFilterHandles>()
@@ -94,11 +94,7 @@ export const Dashboard:React.FC = () => {
 
     const loadStickers = async (filter: string = '') => {
         try {
-            const { data: { sections } } = await api.get(`/stickers${filter}`, {
-                headers: {
-                    userId
-                }
-            })
+            const { data: { sections } } = await api.get(`/stickers${filter}`)
             setSections(sections)
             setLoading(false)
             setRefreshing(false)
@@ -168,7 +164,7 @@ export const Dashboard:React.FC = () => {
                 
             </Content>
             <StickerForm
-                ownerId={userId}
+                ownerId={user.userId}
                 ref={modalRef}
                 onHandleSubmit={handleUpdateSticker}
             />

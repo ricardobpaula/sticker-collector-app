@@ -1,4 +1,9 @@
 export declare global {
+    
+    interface User {
+        userId: string
+        name: string
+    }
     interface Sticker {
         id: string
         number: number
