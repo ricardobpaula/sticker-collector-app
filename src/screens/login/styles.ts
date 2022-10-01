@@ -24,7 +24,7 @@ export const Header = styled(View)`
 `
 
 export const Title = styled(Text)`
-    color: ${colors.secondary[500]};
+    color: ${colors.blue[500]};
     font-size: 25px;
 `
 

@@ -22,6 +22,9 @@ export const Dashboard:React.FC = () => {
     const [loaging, setLoading] = useState<boolean>(true)
     const [refreshing, setRefreshing] = useState<boolean>(false)
     const [filterSelected, setFilterSelected] = useState<number>(1)
+    const [progressColor, setProgressColor] = useState<string>(colors.blue[500])
+    const [progressText, setProgressText] = useState<string>('Concluído')
+
     const { userId } = useAuth()
 
     const modalRef = useRef<StickerFormHandles>()
@@ -33,6 +36,9 @@ export const Dashboard:React.FC = () => {
 
     const handleUpdateSticker = () => {
         setLoading(true)
+        setFilterSelected(1)
+        setProgressColor(colors.blue[500])
+        setProgressText('Concluído')
         loadStickers()
     }
 
@@ -52,18 +58,33 @@ export const Dashboard:React.FC = () => {
         switch (value) {
             case 1:
                 filter = ''
+                setProgressText('Concluído')
+                setProgressColor(colors.blue[500])
                 break
             case 2:
                 filter = '?have=true'
+                setProgressText('Possuidas')
+                setProgressColor(colors.blue[500])
                 break
             case 3:
                 filter = '?have=true&pasted=true'
+                setProgressText('Coladas')
+                setProgressColor(colors.green[500])
                 break
             case 4:
-                filter = '?have=false&pasted=false'
+                filter = '?have=true&pasted=false'
+                setProgressText('Para colar')
+                setProgressColor(colors.orange[500])
                 break
             case 5:
+                filter = '?have=false&pasted=false'
+                setProgressText('Faltantes')
+                setProgressColor(colors.red[500])
+                break
+            case 6:
                 filter = '?repeated=true'
+                setProgressText('Repetidas')
+                setProgressColor(colors.green[500])
                 break
         }
         setFilterSelected(value)
@@ -96,19 +117,28 @@ export const Dashboard:React.FC = () => {
 
     const progress = sections.reduce((acc, section) => {
         const pro = section.stickers.reduce((sum, sticker) => {
-            return sticker.have ? sum + 1 : sum 
+            switch (filterSelected){
+                case 1:
+                    return sticker.have ? sum + 1 : sum
+                case 6:
+                    return sum + sticker.repeated
+                default:
+                    return sum + 1
+            }
         },0)
         return pro + acc
     },0)
+
+    
     
     return (
         <Container>
             <Content>
                 <ProgressBar  
-                    title='Concluído'
+                    title={progressText}
                     progress={progress}
                     size={678}
-                    progressColor={colors.secondary[500]}
+                    progressColor={progressColor}
                     onPress={handleChangeFilter}
                 />
                 <ListSection
@@ -131,7 +161,7 @@ export const Dashboard:React.FC = () => {
                         <RefreshControl
                             refreshing={refreshing}
                             onRefresh={handleRefresh}
-                            tintColor={colors.secondary[500]}
+                            tintColor={colors.blue[500]}
                         />
                     }
                 />

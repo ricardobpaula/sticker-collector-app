@@ -19,13 +19,13 @@ export const Container = styled(View)`
 export const Title = styled(Text)`
     font-size: 16px;
     font-weight: bold;
-    color: ${colors.secondary[500]};
+    color: ${colors.blue[500]};
     margin-bottom: 20px;
 `
 
 export const Label = styled(Text)`
     font-size: 16px;
-    color: ${colors.secondary[500]};
+    color: ${colors.blue[500]};
 `
 
 export const Row =styled(View)`

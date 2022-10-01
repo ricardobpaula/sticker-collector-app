@@ -26,8 +26,9 @@ const StickerFilter:React.ForwardRefRenderFunction<StickerFilterHandles, Sticker
         { label: 'Todas', value: 1 },
         { label: 'Possuidas', value: 2 },
         { label: 'Coladas', value: 3 },
-        { label: 'Faltantes', value: 4 },
-        { label: 'Repetidas', value: 5 }
+        { label: 'Para colar', value: 4 },
+        { label: 'Faltantes', value: 5 },
+        { label: 'Repetidas', value: 6 }
     ]
 
     const onChangeValue = (value: number) => {

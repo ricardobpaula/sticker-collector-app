@@ -32,7 +32,7 @@ export const SectionItem:React.FC<SectionItem> = ({
                         const background = sticker.have && sticker.pasted ?
                             colors.green[500] :
                                 sticker.have && !sticker.pasted ?
-                                    colors.primary[300] :
+                                    colors.orange[300] :
                                     colors.gray[100]
                         return (
                             <Item 

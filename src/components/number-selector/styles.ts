@@ -16,11 +16,11 @@ export const Container = styled(View)`
 `
 
 export const Title = styled(Text)`
-    color: ${colors.secondary[500]};
+    color: ${colors.blue[500]};
     font-size: 16px;
 `
 export const Number = styled(Text)`
-    color: ${colors.secondary[500]};
+    color: ${colors.blue[500]};
     font-size: 16px;
     padding-left: 10px;
     padding-right: 10px;

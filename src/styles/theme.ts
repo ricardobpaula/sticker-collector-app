@@ -1,11 +1,11 @@
 export const colors = {
-    primary: {
+    orange: {
       700: '#E09200',
       600: '#EE9900',
       500: '#F9A826',
       300: '#FFB833'
     },
-    secondary: {
+    blue: {
       700: '#6C63FF',
       500: '#8b85ff'
     },

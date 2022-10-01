@@ -36,7 +36,7 @@ export const ProgressBar:React.FC<ProgressBarProps> = ({
                 <Title
                     color={progressColor}
                 >
-                    {title}: {percent}%
+                    {title}: {progress} ({percent}%)
                 </Title>
             </TouchableOpacity>
             <ProgressBarContainer>

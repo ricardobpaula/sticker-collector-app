@@ -34,7 +34,7 @@ export const CheckBox:React.FC<CheckBoxProps> = (
                 <MaterialIcons
                     name='check'
                     size={30}
-                    color={colors.secondary[500]}
+                    color={colors.blue[500]}
                 />
             }
         </Container>

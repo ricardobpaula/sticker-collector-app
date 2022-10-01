@@ -51,7 +51,7 @@ export const NumberSelector:React.FC<NumberSelectorProps> = ({
                     <MaterialIcons 
                         size={25}
                         name='remove'
-                        color={colors.secondary[500]}
+                        color={colors.blue[500]}
                     />
                 </Button>
                 <Number>{number}</Number>
@@ -63,7 +63,7 @@ export const NumberSelector:React.FC<NumberSelectorProps> = ({
                     <MaterialIcons 
                         size={25}
                         name='add'
-                        color={colors.secondary[500]}
+                        color={colors.blue[500]}
                     />
                 </Button>
 

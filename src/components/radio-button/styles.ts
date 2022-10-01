@@ -22,7 +22,7 @@ export const Content = styled(TouchableOpacity)`
 
 export const Label = styled(Text)`
     font-size: 16px;
-    color: ${colors.secondary[500]};
+    color: ${colors.blue[500]};
 `
 
 export const CheckBox = styled(View)`

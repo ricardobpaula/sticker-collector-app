@@ -9,7 +9,7 @@ import { colors } from '../../styles/theme'
 export const Container = styled(TouchableOpacity)`
     width: 100%;
     margin-top: 10px;
-    background-color: ${colors.secondary[500]};
+    background-color: ${colors.blue[500]};
     height: 40px;
     align-items: center;
     justify-content: center;

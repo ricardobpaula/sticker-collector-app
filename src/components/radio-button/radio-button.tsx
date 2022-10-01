@@ -46,7 +46,7 @@ export const RadioButton:React.FC<RadioProps> = ({
                             <MaterialIcons
                                 name='check'
                                 size={30}
-                                color={colors.secondary[500]}
+                                color={colors.blue[500]}
                             />
                         }
                     </CheckBox>

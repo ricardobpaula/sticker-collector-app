@@ -27,7 +27,7 @@ export const Header = styled(View)`
 export const Title = styled(Text)`
     font-size: 16px;
     font-weight: bold;
-    color: ${colors.secondary[500]};
+    color: ${colors.blue[500]};
 `
 export const SubTitle = styled(Text)`
     font-size: 15px;

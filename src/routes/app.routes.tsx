@@ -19,7 +19,7 @@ const DashboardStack:React.FC = () => {
             screenOptions={{headerStyle: {
                 backgroundColor: colors.gray[700]
             },
-            headerTintColor: colors.secondary[700]
+            headerTintColor: colors.blue[700]
         }}
         >
 
@@ -37,7 +37,7 @@ export const AppRoutes:React.FC = () => {
     return (
         <Navigator screenOptions={{
             headerShown: false,
-            tabBarActiveTintColor: colors.secondary[500],
+            tabBarActiveTintColor: colors.blue[500],
             tabBarInactiveTintColor: colors.gray[100],
             tabBarStyle: {
                 backgroundColor: colors.gray[700]
