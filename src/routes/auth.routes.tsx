@@ -14,8 +14,8 @@ export type AuthStackParamsList = {
 export const AuthRoutes:React.FC = () => {
     return (
         <Navigator screenOptions={{headerShown: false}}>
-            <Screen name="SignUp" component={SignUp} /> 
             <Screen name="Login" component={Login} />          
+            <Screen name="SignUp" component={SignUp} /> 
         </Navigator>
     )
 }

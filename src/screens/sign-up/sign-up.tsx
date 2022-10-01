@@ -1,12 +1,12 @@
-import { useNavigation } from "@react-navigation/native"
-import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import React, { useState } from "react"
+import { useNavigation } from "@react-navigation/native"
 import { Alert, TouchableOpacity } from "react-native"
 import { Button } from "../../components/button/button"
 import { Input } from "../../components/Input/input"
 import { useAuth } from "../../hooks/useAuth"
-import { AuthStackParamsList } from "../../routes/auth.routes"
+
 import { api } from "../../services/api"
+
 import {
     Container,
     Content,
@@ -17,14 +17,13 @@ import {
     LoginButtonText
 } from './styles'
 
-type SignUpScreenProp = NativeStackNavigationProp<AuthStackParamsList, 'SignUp'>
-
 export const SignUp:React.FC = () => {
     const [name, setName] = useState<string>()
     const [email, setEmail] = useState<string>()
-    const navigator = useNavigation<SignUpScreenProp>()
 
     const { login } = useAuth()
+
+    const navigator = useNavigation()
 
     const handleSubmit = async () => {
         if (!name) {
@@ -50,7 +49,7 @@ export const SignUp:React.FC = () => {
     }
 
     const handleLoginButton = () => {
-        navigator.navigate('Login')
+        navigator.goBack()
     }
 
     return (

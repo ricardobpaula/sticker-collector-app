@@ -18,12 +18,17 @@ import {
     SignInButtonText
 } from './styles'
 
+import { AuthStackParamsList } from "../../routes/auth.routes"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+
+type LoginScreenProp = NativeStackNavigationProp<AuthStackParamsList, 'Login'>
+
 export const Login:React.FC = () => {
     const [email, setEmail] = useState<string>()
 
-    const navigator = useNavigation()
-
     const { login } = useAuth()
+
+    const navigator = useNavigation<LoginScreenProp>()
 
     const handleSubmit = async () => {
         if(!email) {
@@ -34,7 +39,7 @@ export const Login:React.FC = () => {
     }
 
     const handleSignUpButton = () => {
-        navigator.goBack()
+        navigator.navigate('SignUp')
     }
 
     return (
