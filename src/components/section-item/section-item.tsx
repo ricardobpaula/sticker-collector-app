@@ -1,53 +1,37 @@
-import React from "react"
-import { colors } from "../../styles/theme"
+import React from 'react'
 
-import { 
+import { TouchableOpacityProps } from 'react-native'
+
+import {
     Container,
-    Content,
-    Header,
-    Item,
-    SubTitle,
     Title
- }from './styles'
+} from './styles'
 
- interface SectionItem {
-    section: Section
-    handleOpenSticker: (sticker: Sticker, sectionCode: string) => void
- }
+import { colors } from '../../styles/theme'
 
-export const SectionItem:React.FC<SectionItem> = ({
-    section: { code, name, stickers }, handleOpenSticker
-}) => {
+
+type SectionItemProps = TouchableOpacityProps & {
+    sticker: Sticker
+    sectionCode: string
+}
+
+export const SectionItem:React.FC <SectionItemProps> = (
+    {sticker, sectionCode, ...rest}) => {
+    
+    const background = sticker.have && sticker.pasted ?
+        colors.green[500] :
+            sticker.have && !sticker.pasted ?
+                colors.orange[300] :
+                colors.gray[100]
 
     return (
-        <Container>
-            <Header>
-                <Title>{name}</Title>
-            </Header>
-            <Content>
-                {
-                    stickers.map(sticker => {
-                        const background = sticker.have && sticker.pasted ?
-                            colors.green[500] :
-                                sticker.have && !sticker.pasted ?
-                                    colors.orange[300] :
-                                    colors.gray[100]
-                        return (
-                            <Item 
-                                key={sticker.id}
-                                backgroundColor={background}
-                                activeOpacity={0.7}
-                                onPress={() => handleOpenSticker(sticker, code)}
-                            >
-                                <SubTitle>
-                                    {code}{sticker.number}
-                                </SubTitle>
-                            </Item>
-                        )
-                    })
-                }
-            </Content>
-
+        <Container 
+            backgroundColor={background}
+            {...rest}
+        >
+            <Title>
+                {sectionCode}{sticker.number}
+            </Title>
         </Container>
     )
 }

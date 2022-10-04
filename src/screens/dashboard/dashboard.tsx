@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ProgressBar } from '../../components/progress-bar/progress-bar'
 import { colors } from '../../styles/theme'
 
@@ -13,7 +13,7 @@ import {
 import { Alert, RefreshControl } from 'react-native'
 import { api } from '../../services/api'
 import { useAuth } from '../../hooks/useAuth'
-import { SectionItem } from '../../components/section-item/section-item'
+import { Section } from '../../components/section/section'
 import StickerForm, { StickerFormHandles } from '../../components/sticker-form/sticker-form'
 import StickerFilter, { StickerFilterHandles } from '../../components/sticker-filter/sticker-filter'
 
@@ -30,9 +30,9 @@ export const Dashboard:React.FC = () => {
     const modalRef = useRef<StickerFormHandles>()
     const modalFilterRef = useRef<StickerFilterHandles>()
 
-    const handleOpenSticker = (sticker: Sticker, sectionCode: string) => {
+    const handleOpenSticker = useCallback((sticker: Sticker, sectionCode: string) => {
         modalRef.current?.openModal(sticker, sectionCode)
-    }
+    }, [])
 
     const handleUpdateSticker = () => {
         setLoading(true)
@@ -95,9 +95,12 @@ export const Dashboard:React.FC = () => {
     const loadStickers = async (filter: string = '') => {
         try {
             const { data: { sections } } = await api.get(`/stickers${filter}`)
-            setSections(sections)
-            setLoading(false)
-            setRefreshing(false)
+            const t = setInterval(() => {
+                setSections(sections)
+                setLoading(false)
+                setRefreshing(false)
+            }, 200)
+            return () => clearInterval(t)
         } catch (error) {
             Alert.alert('Error loading stickers')
             setLoading(false)
@@ -144,7 +147,7 @@ export const Dashboard:React.FC = () => {
                     keyExtractor={item => item.id}
                     renderItem={({item}) => {
                         return (
-                            <SectionItem 
+                            <Section 
                                 section={item}
                                 key={item.id}
                                 handleOpenSticker={(sticker, sectionCode) => handleOpenSticker(sticker, sectionCode)}
